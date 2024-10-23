@@ -4,15 +4,19 @@ def heb_net(x, target, alpha, init):
     w.append(list(init))
     while True:
         print("#{}".format(i + 1), end=", ")
-        print(
-            "P_{} = {}, w = {}".format((i % len(x)) + 1, x[i % len(x)], w[i]), end=", "
-        )
         net = wx(w[i], x[i % len(x)])  # net value
+        if (len(init) < 6):
+            print("P_{} = {}, w = {}".format((i % len(x)) + 1, x[i % len(x)], w[i]), end=", ")
+        else:
+            print("P_{}".format((i % len(x)) + 1), end=", ")
         print("net = {}".format(net), end=", ")
         print("f(net) = {}, target = {}".format(f_net(net), target[i % len(x)]))
         if f_net(net) == target[i % len(x)]:  # y = t ?
             w.append(list(w[i]))
-            print("Result: do nothing.   {}".format(w[i + 1]))
+            if (len(init) < 6):
+                print("Result: do nothing.   {}".format(w[i + 1]))
+            else:
+                print("Result: do nothing.")
         else:
             w_new_list = list(
                 w_new(w[i], alpha, target[i % len(x)], f_net(net), x[i % len(x)])
